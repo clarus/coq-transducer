@@ -30,7 +30,7 @@ Definition filter {A B : Type} (f : B -> bool) (red : Red.t A B) : Red.t A B :=
     else
       a.
 
-Definition take {A B : Type} (red : Red.t A B) : A * nat -> B -> A * nat :=
+Definition take {A B : Type} (red : Red.t A B) : Red.t (A * nat) B :=
   fun a x =>
     match a with
     | (a, S n) => (red a x, n)
@@ -41,7 +41,6 @@ Definition transduce {A B C D : Type} {T : Type -> Type}
   (transducer : Red.t C D -> Red.t A B) (red : Red.t C D) (a : A)
   (fold : A -> Red.t A B -> T B -> A) (stream : T B) : A :=
   fold a (transducer red) stream.
-
 
 Module Test.
   Definition l := [Some 1; None; Some 2; Some 3].
